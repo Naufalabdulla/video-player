@@ -4,6 +4,7 @@ box-sizing: border-box;
 
 body{
     margin: 0;
+    background-color: rgba(0, 0, 0, 0.871);
 }
 
 .video-container{
@@ -14,8 +15,23 @@ body{
     justify-content: center;
     margin-inline: auto;
     color: white;
+    background-color: black;
 }
 
+.video-container.theater,
+.video-container.full-screen{
+    max-width: initial;
+    width: 100%;
+}
+
+.video-container.theater{
+    max-height: 90vh;
+}
+
+.video-container.full-screen{
+    max-height: 100vh;
+    /* its not actually fill the screen cause ther's an icon under the video its hidden because its white as the backgrouch body */
+}
 
 video{
     width: 100%;
@@ -32,7 +48,7 @@ video{
 }
 
 .video-controls-container::before{
-    content: "";
+    content: " ";
     position: absolute;
     bottom: 0;
     background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
@@ -70,10 +86,71 @@ video{
     opacity: 1;
 }
 
-.video-container .paused .pause-icon{
+.video-container.paused .pause-icon{
     display: none;
 }
 
 .video-container:not(.paused) .play-icon{
     display: none;
+}
+
+.video-container.theater .tall{
+    display: none;
+}
+
+.video-container:not(.theater) .wide{
+    display: none;
+}
+
+.video-container.full-screen .open{
+    display: none;
+}
+
+.video-container:not(.full-screen) .close{
+    display: none;
+}
+
+.volume-muted-icon,
+.volume-high-icon,
+.volume-low-icon{
+    display: none;
+}
+
+.video-container[data-volume-level="high"] .volume-high-icon{
+    display: block;
+}
+.video-container[data-volume-level="low"] .volume-low-icon{
+    display: block;
+}
+.video-container[data-volume-level="muted"] .volume-muted-icon{
+    display: block;
+}
+
+.volume-container{
+    display: flex;
+    align-items: center;
+}
+
+.volume-slider{
+    width: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: width 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.volume-container:hover .volume-slider,
+.volume-slider:focus-within{
+    width: 100px;
+    transform: scaleX(1);
+}
+
+.duration-container{
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    flex-grow: 1;
+}
+
+.video-controls-container .controls button.wide-btn{
+    width: 50px;
 }
